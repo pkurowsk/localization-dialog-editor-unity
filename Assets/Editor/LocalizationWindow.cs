@@ -15,6 +15,10 @@ public class LocalizationWindow : EditorWindow {
 	static void Init () {
 		// Get existing open window or if none, make a new one:
 		LocalizationWindow window = (LocalizationWindow)EditorWindow.GetWindow (typeof (LocalizationWindow));
+		Rect newRect = window.position;
+		newRect.center = new Vector2 (Screen.GetResolution [0].width / 2, 
+		                              Screen.GetResolution [0].height / 2);
+		window.position = newRect;
 
 		lSettings = (LocalizationSettings)AssetDatabase.LoadAssetAtPath ("Assets/Resources/Languages/Settings.asset", typeof(LocalizationSettings));
 

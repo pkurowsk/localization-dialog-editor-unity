@@ -20,6 +20,10 @@ public class DialogEditorWindow : EditorWindow {
 		// Get existing open window or if none, make a new one:
 		DialogEditorWindow window = (DialogEditorWindow)EditorWindow.GetWindow (typeof (DialogEditorWindow));
 
+		Rect newRect = window.position;
+		newRect.center = new Vector2 (Screen.GetResolution [0].width / 2, 
+		                              Screen.GetResolution [0].height / 2);
+		window.position = newRect;
 	}
 	
 	void OnGUI () {
@@ -72,7 +76,7 @@ public class DialogEditorWindow : EditorWindow {
 				// Show dialogs and keys
 				EditorGUILayout.BeginVertical();
 				dialog.responses[i] = EditorGUILayout.TextField(dialog.responses[i]);
-				dialog.responseNextDialogs[i] = (Dialog)EditorGUILayout.ObjectField (dialog.responseNextDialogs[i], typeof(Dialog));
+				dialog.responseNextDialogs[i] = (Dialog)EditorGUILayout.ObjectField (dialog.responseNextDialogs[i], typeof(Dialog), false);
 				
 				if (GUILayout.Button ("-")) {
 					dialog.DeleteBranch(dialog.responses[i]);
@@ -93,7 +97,7 @@ public class DialogEditorWindow : EditorWindow {
 			GUILayout.Label ("New Branch:", EditorStyles.boldLabel);
 			EditorGUILayout.BeginHorizontal();
 			newResponse = EditorGUILayout.TextField(newResponse);
-			newDialog = (Dialog)EditorGUILayout.ObjectField(newDialog, typeof(Dialog));
+			newDialog = (Dialog)EditorGUILayout.ObjectField(newDialog, typeof(Dialog), false);
 			if (GUILayout.Button ("+")) {
 				if (newResponse != "" && !dialog.responses.Contains(newResponse))	{
 					dialog.AddNewBranch(newResponse, newDialog);
